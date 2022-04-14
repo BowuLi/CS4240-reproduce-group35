@@ -24,10 +24,7 @@ The specific parallel structure proposed in this paper is shown in the figure ab
 
 Since HSE has the lowest resolution, most of the convolution layers are assigned to HSE. The basic building block of HSE is the modified residual density Block (RDB). The modified RDB* can simultaneously process both rectified and non-rectified output of each convolutional layer and avoid the problem of complete loss of information due to non-linear rectification. After each scale has been calculated, Fuse Block 1 (FB 1) and Fuse Block 2 (FB 2) fuses details from all the scales to generate the restored image.
 
-If the execution time of parallel tasks is nearly the same, parallelism can be best utilized to minimize idle time. Therefore, LSE, MSE and HSE need to be executed at the same speed as possible. How do we quantify the speed? A simplified assumption is made to translate this problem to LSE, MSE, and HSE should have the same number of floating-point operations. 
-
-Assume the size of the raw image is H × W. And the size of convolutional kernels $k_{\gamma} \times k_{\gamma}$, where $\gamma \in {\{LSE, MSE, HSE\}}$. $C_{\gamma}^i$ and $C_{\gamma}^o$ are the number of input and output channels. $n_{\gamma}$ and $r_{\gamma}$ denotes  the number of convolutional layers and the downsampling factor respectively. Then, we can calculate the number of operations and implement effective parallelism with the equation:
-$\#operations = \frac{H}{r_{\gamma}} \times \frac{W}{r_{\gamma}} \times k_{\gamma}^2 \times C_{\gamma}^i \times C_{\gamma}^o \times n_{\gamma}$
+If the execution time of parallel tasks is nearly the same, parallelism can be best utilized to minimize idle time. Therefore, LSE, MSE and HSE need to be executed at the same speed as possible. How do we quantify the speed? A simplified assumption is made to translate this problem to LSE, MSE, and HSE should have the same number of floating-point operations. Through dedicated designed convolutional layer parameters, the model achieves effective parallelism.
 
 In the experiment, Peak Signal to Noise Ratio (PSNR) and Structural Similarity Index Measure (SSIM) were used as evaluation criteria. PSNR is an engineering term for the ratio between the maximum possible power of a signal and the power of corrupting noise that affects the fidelity of its representation[^PSNR]. And SSIM is used for measuring the similarity between two images[^SSIM]. The higher these two indicators are, the closer the restored image is to the original.
 
@@ -165,7 +162,7 @@ Because the channels of visual representations are not entirely independent, GN 
 ## Section VII: Model reduction
 According to the equation given in the paper[^REDI]:
 
-$\frac{H}{r_{HSE}}\frac{W}{r_{HSE}}(n_{HSE}k_{HSE}^2C_{gr}\sum^\eta_{j=1}[C^i_{HSE}+(j-1)C_{gr}]+n_{HSE}[C^i_{HSE}+\eta\cdot C_{gr}]C^i_{HSE}+k^2_{HSE}r^2_{HSE})$
+![](https://i.imgur.com/hRwXx8k.png)
 
 We can calculate the number of operations in the Higher Scale Encoder (HSE) of the model. We find that there are two $n_{HSE}$ terms in this formula, so we think if we could remove one RDB layer, there could be much fewer parameters. 
 
@@ -179,7 +176,10 @@ Based on this idea, we modified the network, and get the network with 780672 par
 
 The table above shows the final metric of different models. As we mentioned above, we use quite small preprocessed datasets to speed up training, so we evaluated the standard model again to set the baseline of the qualitative analysis. With the same dataset, we can notice that the 2 RDB model is slightly better than the standard one. This could be considered a kind of error. But there is also no performance degradation. The possible reason is that the original model is already overfitted that small dataset, while a simplified model reduces that phenomenon. This can also be derived from the fact that the standard model has lower loss but also lower PSNR and SSIM.
 
-## Distr
+## Task division
+All group members participated in the reproduction of the original network.
+Shixun Wu and Ting Liang were responsible for the first research goal: different dataset.
+Zhaofeng Shen and Bowu Li were responsible for model reduction and research and apply GN.
 
 ## References
 
