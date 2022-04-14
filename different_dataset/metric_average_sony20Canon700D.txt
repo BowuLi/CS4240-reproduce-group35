@@ -1,0 +1,1 @@
+-- psnr_avg:1.0400792800020782, ssim_avg:0.1749361582466524, c_gt_avg:0.0, c_pred_avg:0.0, iter:0
