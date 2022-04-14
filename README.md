@@ -2,11 +2,15 @@
 
 *Original Authors: Mohit Lamba, Kaushik Mitra*
 
-*Reproduction Authors: 
-Ting Liang, 5140331, t.liang@student.tudelft.nl
-Zhaofeng Shen, 5404568, Z.shen-8@student.tudelf.nl
-Bowu Li, 5463351, B.Li-15@student.tudelft.nl
-Shixun Wu, 5139414，S.Wu-11@student.tudelft.nl*
+*Reproduction Authors:*
+
+*Ting Liang, 5140331, t.liang@student.tudelft.nl*
+
+*Zhaofeng Shen, 5404568, Z.shen-8@student.tudelf.nl*
+
+*Bowu Li, 5463351, B.Li-15@student.tudelft.nl*
+
+*Shixun Wu, 5139414，S.Wu-11@student.tudelft.nl*
 
 ## Section I: Introduction
 
